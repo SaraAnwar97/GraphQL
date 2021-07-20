@@ -5,6 +5,9 @@ const mongoose = require('mongoose');
 const MONGODB_URI = 'mongodb+srv://Sara:Ss4923@@@cluster0.ldpfv.mongodb.net/Feed';
 const app = express();
 const multer = require('multer');
+const graphqlHTTP = require('express-graphql').graphqlHTTP;
+const graphqlSchema = require('./graphql/schema');
+const graphqlResolver = require('./graphql/resolvers');
 
 const fileStorage = multer.diskStorage({
   destination: (req,file,cb)  =>{
@@ -34,6 +37,11 @@ res.setHeader('Access-Control-Allow-Methods','GET,POST,PUT,PATCH,DELETE');
 res.setHeader('Access-Control-Allow-Headers','Content-Type,Authorization');
 next();
 });
+
+app.use('/graphql', graphqlHTTP ({
+  schema: graphqlSchema,
+  rootValue: graphqlResolver
+}));
 
 app.use((error,req,res,next)=>{
   console.log(error);
