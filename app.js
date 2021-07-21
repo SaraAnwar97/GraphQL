@@ -8,6 +8,7 @@ const multer = require('multer');
 const graphqlHTTP = require('express-graphql').graphqlHTTP;
 const graphqlSchema = require('./graphql/schema');
 const graphqlResolver = require('./graphql/resolvers');
+const auth = require('./middleware/auth');
 
 const fileStorage = multer.diskStorage({
   destination: (req,file,cb)  =>{
@@ -40,6 +41,8 @@ if (req.method === 'OPTIONS'){
 }
 next();
 });
+
+app.use(auth);
 
 app.use('/graphql', graphqlHTTP ({
   schema: graphqlSchema,
