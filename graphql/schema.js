@@ -47,6 +47,7 @@ module.exports = buildSchema(`
        createPost(postInput: PostInputData) : Post!
        updatePost(id: ID!, postInput: PostInputData) : Post!
        deletePost(id: ID!) : Boolean
+       updateStatus(status: String!) : User!
     }
     schema {
         query: RootQuery
